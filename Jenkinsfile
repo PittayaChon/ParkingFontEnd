@@ -17,8 +17,8 @@ pipeline {
             steps {
                 sh 'docker image prune -a'
                 sh 'docker volume prune'
-                sh 'docker image rm parkingFontEnd'
-                sh 'docker build -t parkingFontEnd .'
+                sh 'docker image rm parkingfontend'
+                sh 'docker build -t parkingfontend .'
                 //   script{
                 // //    app = docker.build('api:latest')
                 //    dockerImage = docker.build registry + ":latest"
