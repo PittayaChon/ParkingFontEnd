@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+  frontend:
+    build:
+      dockerfile: Dockerfile.dev
+    ports:
+      - 4200:4200
+    environment:
+      - WDS_SOCKET_PORT=0
+    volumes:
+      - /app/node_modules
+      - .:/app
+    networks:
+      - parking-network
+networks:
+  parking-network:
