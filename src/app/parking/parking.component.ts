@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ParkingService } from '../services/parking.service';
 import { StatusParking } from '../variable';
 
-enum Status {
+enum ParkingLotStatus {
   Available = 1,
   Occupied = 2,
   Reserved = 3,
@@ -26,11 +26,11 @@ export class ParkingComponent implements OnInit {
   }
 
   parkingLotStatus(park: StatusParking) {
-    if (park.reservable && park.status === Status.Available) {
+    if (park.reservable && park.status === ParkingLotStatus.Available) {
       return 'Reserved';
     }
 
-    if (park.status === Status.Occupied) {
+    if (park.status === ParkingLotStatus.Occupied) {
       return 'Occupied';
     }
 
