@@ -2,7 +2,7 @@ pipeline {
     environment {
     registryCredential = ''
     dockerImage = ''
-  }
+   }
   agent  any
     stages {
         stage('Clone git') {
@@ -53,5 +53,4 @@ pipeline {
                     }
               }
         }
-    }
 }
