@@ -10,6 +10,7 @@ import { park, reserve } from '../mock';
 })
 export class MobileComponent implements OnInit {
   datafordisplayreserve = reserve;
+  message = ''
   NP1 = '';
   NP2 = '';
   NP3 = '';
@@ -34,7 +35,7 @@ export class MobileComponent implements OnInit {
       this.mockapiupdate(value, 2);
       return;
     }
-    if (s === 'Reserled') {
+    if (s === 'Reserved') {
       this.formg.patchValue({ status: 0 });
       this.formg.patchValue({ lot_id: value });
       this.formg.patchValue({ licenseplate: licen });
