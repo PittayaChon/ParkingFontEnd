@@ -37,7 +37,13 @@ pipeline {
 
         stage('Prepare deploy') {
             steps {
-                    echo 'Building..'
+                sshagent(credentials: ['jenkins-prod-server']) {
+                    sh '''
+                    [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 0700 ~/.ssh
+                    ssh-keyscan -t rsa,dsa example.com >> ~/.ssh/known_hosts
+                    ssh ubuntu@prod.sandbox-me.com ...
+                    scp -i  docker-compose.yml ubuntu@prod.sandbox-me.com:/parkingfontend
+                    '''
             }
         }
 
