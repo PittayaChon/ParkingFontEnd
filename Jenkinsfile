@@ -25,6 +25,7 @@ pipeline {
         stage('Testing') {
             steps {
                 echo 'Testing..'
+                sh 'python3 --version'
             }
         }
 
