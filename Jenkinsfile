@@ -39,7 +39,7 @@ pipeline {
             steps {
                     sshagent(credentials: ['jenkins-production']) {
                     sh 'ssh -o StrictHostKeyChecking=no ubuntu@prod.sandbox-me.com mkdir -p /home/ubuntu/parkingfontend'
-                    sh 'scp -o StrictHostKeyChecking=no docker-compose.yml ubuntu@prod.sandbox-me.com:/home/ubuntu/parkingfontend/dev-docker-compose.yml'
+                    sh 'scp -o StrictHostKeyChecking=no dev-docker-compose.yml ubuntu@prod.sandbox-me.com:/home/ubuntu/parkingfontend/dev-docker-compose.yml'
                     }
                 }
         }
