@@ -1,15 +1,14 @@
 version: "3.9"
 services:
   frontend:
-    build:
-      dockerfile: Dockerfile.dev
+    image: 0865079783/parkingfontend:latest
     ports:
       - 4200:4200
     environment:
       - WDS_SOCKET_PORT=0
     volumes:
       - /app/node_modules
-      - ./:/app
+      - .:/app
     networks:
       - parking-network
 networks:

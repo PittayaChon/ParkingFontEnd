@@ -2,7 +2,7 @@ pipeline {
     environment {
     registryCredential = ''
     dockerImage = ''
-  }
+   }
   agent  any
     stages {
         stage('Clone git') {
@@ -37,16 +37,24 @@ pipeline {
 
         stage('Prepare deploy') {
             steps {
-                    echo 'Building..'
-            }
+                    sshagent(credentials: ['jenkins-production']) {
+                    sh 'ssh -o StrictHostKeyChecking=no ubuntu@prod.sandbox-me.com mkdir -p /home/ubuntu/parkingfontend'
+                    sh 'scp -o StrictHostKeyChecking=no docker-compose.yml ubuntu@prod.sandbox-me.com:/home/ubuntu/parkingfontend/docker-compose.yml'
+                    }
+                }
         }
-
+        
         stage('Deploy on production') {
             steps {
-              script {
-                    echo 'Building..'
-                }
-              }
+                    sshagent(credentials: ['jenkins-production']) {
+                    sh 'ssh -o StrictHostKeyChecking=no ubuntu@prod.sandbox-me.com docker-compose -f /home/ubuntu/parkingfontend/docker-compose.yml down'
+                    sh 'docker image rm 0865079783/parkingfontend -f'
+                    sh 'docker image prune -a -f'
+                    sh 'docker volume prune -f'
+                    sh 'ssh -o StrictHostKeyChecking=no ubuntu@prod.sandbox-me.com docker-compose -f /home/ubuntu/parkingfontend/docker-compose.yml pull'
+                    sh 'ssh -o StrictHostKeyChecking=no ubuntu@prod.sandbox-me.com docker-compose -f /home/ubuntu/parkingfontend/docker-compose.yml up -d'
+                    }
+            }
         }
     }
 }
