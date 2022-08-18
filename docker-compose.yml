@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   frontend:
-    image: 0865079783/parkingbackend:latest
+    image: 0865079783/parkingfontend:latest
       # build:
       # dockerfile: Dockerfile.dev
     ports:
