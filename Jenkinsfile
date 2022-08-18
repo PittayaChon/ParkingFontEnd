@@ -25,10 +25,6 @@ pipeline {
         stage('Testing') {
             steps {
                 echo 'Testing..'
-                sh 'python3 --version'
-                sh 'pip --version'
-                sh 'pip3 --version'
-                sh 'wget --version'
             }
         }
 
