@@ -27,6 +27,32 @@ statusfrontend:any = [
 ]
 
 
+
+
+  constructor(private route:Router ,private s:ParkingService) {}
+
+  ngOnInit(): void {
+
+    for (let i = 1; i <= 10; i++) {
+      if (i < 10 ){var value = "A00" + String(i)} else {var value = "A010"}
+      const index = this.data.findIndex(item => item.lot_id === value)
+      if (this.data[index].status === 0){this.statusfrontend[i-1] = 'Available'}
+      if (this.data[index].status === 1){this.statusfrontend[i-1] = 'Occupied'}
+      if (this.data[index].status === 2){this.statusfrontend[i-1] = 'Reserved'}
+    }
+    this.NP1 = this.statusfrontend[0]
+    this.NP2 = this.statusfrontend[1]
+    this.NP3 = this.statusfrontend[2]
+    this.NP4 = this.statusfrontend[3]
+    this.NP5 = this.statusfrontend[4]
+    this.NP6 = this.statusfrontend[5]
+    this.NP7 = this.statusfrontend[6]
+    this.NP8 = this.statusfrontend[7]
+    this.NP9 = this.statusfrontend[8]
+    this.NP10 = this.statusfrontend[9]
+  }
+
+
  updateDisplay(value:string){
 
   const index = park.findIndex(item => item.lot_id === value)
@@ -61,29 +87,5 @@ statusfrontend:any = [
  testapi(){
    this.s.getHeroes().subscribe(value => this.data = value)
  }
-
-
-  constructor(private route:Router ,private s:ParkingService) {}
-
-  ngOnInit(): void {
-
-    for (let i = 1; i <= 10; i++) {
-      if (i < 10 ){var value = "A00" + String(i)} else {var value = "A010"}
-      const index = this.data.findIndex(item => item.lot_id === value)
-      if (this.data[index].status === 0){this.statusfrontend[i-1] = 'Available'}
-      if (this.data[index].status === 1){this.statusfrontend[i-1] = 'Occupied'}
-      if (this.data[index].status === 2){this.statusfrontend[i-1] = 'Reserled'}
-    }
-    this.NP1 = this.statusfrontend[0]
-    this.NP2 = this.statusfrontend[1]
-    this.NP3 = this.statusfrontend[2]
-    this.NP4 = this.statusfrontend[3]
-    this.NP5 = this.statusfrontend[4]
-    this.NP6 = this.statusfrontend[5]
-    this.NP7 = this.statusfrontend[6]
-    this.NP8 = this.statusfrontend[7]
-    this.NP9 = this.statusfrontend[8]
-    this.NP10 = this.statusfrontend[9]
-  }
 
 }
