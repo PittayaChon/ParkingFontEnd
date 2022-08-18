@@ -5,6 +5,12 @@ import { park as parkMock, reserve } from '../mock';
 import { ParkingService } from '../services/parking.service';
 import { StatusParking } from '../variable';
 
+enum Status {
+  Available = 1,
+  Occupied = 2,
+  Reserved = 3,
+}
+
 @Component({
   selector: 'app-parking',
   templateUrl: './parking.component.html',
@@ -12,68 +18,33 @@ import { StatusParking } from '../variable';
 })
 export class ParkingComponent implements OnInit {
   parks: StatusParking[] = [];
-  NP1 = '';
-  NP2 = '';
-  NP3 = '';
-  NP4 = '';
-  NP5 = '';
-  NP6 = '';
-  NP7 = '';
-  NP8 = '';
-  NP9 = '';
-  NP10 = '';
-  statusfrontend: any = [
-    { status01: '' },
-    { status02: '' },
-    { status03: '' },
-    { status04: '' },
-    { status05: '' },
-    { status06: '' },
-    { status07: '' },
-    { status08: '' },
-    { status09: '' },
-    { status010: '' },
-  ];
 
   constructor(private route: Router, private parkingService: ParkingService) {}
 
   ngOnInit(): void {
     this.parkingService.getParks().subscribe((parks) => {
       this.parks = parks;
-
-      for (let i = 0; i < this.parks.length; i++) {
-        let startIndex = i + 1;
-        var lot_id = 'A0';
-
-        lot_id =
-          startIndex > 9 ? `${lot_id}${startIndex}` : `${lot_id}0${startIndex}`;
-        const index = this.parks.findIndex((item) => item.lot_id === lot_id);
-        if (this.parks[index].status === 1) {
-          this.statusfrontend[i] = 'Available';
-        }
-        if (this.parks[index].status === 2) {
-          this.statusfrontend[i] = 'Occupied';
-        }
-        if (this.parks[index].status === 3) {
-          this.statusfrontend[i] = 'Reserved';
-        }
-      }
-
-      this.NP1 = this.statusfrontend[0];
-      this.NP2 = this.statusfrontend[1];
-      this.NP3 = this.statusfrontend[2];
-      this.NP4 = this.statusfrontend[3];
-      this.NP5 = this.statusfrontend[4];
-      this.NP6 = this.statusfrontend[5];
-      this.NP7 = this.statusfrontend[6];
-      this.NP8 = this.statusfrontend[7];
-      this.NP9 = this.statusfrontend[8];
-      this.NP10 = this.statusfrontend[9];
     });
   }
 
-  updateDisplay(lot_id: string) {
-    const park = this.parks.find((item) => item.lot_id === lot_id);
+  parkingLotStatus(park: StatusParking) {
+    if (park.reservable && park.status === Status.Available) {
+      return 'Reserved';
+    }
+
+    if (park.status === Status.Occupied) {
+      return 'Occupied';
+    }
+
+    return 'Available';
+  }
+
+  updateDisplay(id: number) {
+    const park = this.parks.find((park) => park.id === id);
+
+    if (park?.reservable) {
+      return alert('ช่องสำหรับผู้ที่เป็นสมาชิกเท่านั้น');
+    }
 
     const updatedPark = {
       ...park,

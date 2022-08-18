@@ -1,194 +1,57 @@
 <div>
   <div class="row">
     <div
-      (click)="updateDisplay('A001')"
-      id="A001"
+      *ngFor="let park of parks | slice: 0:5; let i = index"
+      (click)="updateDisplay(park.id)"
+      [id]="park.id"
       class="col border border-dark border-bottom-0 top"
       [ngClass]="{
-        'green-c': NP1 === 'Available',
-        'red-c': NP1 === 'Occupied'
+        'green-c': parkingLotStatus(park) === 'Available',
+        'red-c': parkingLotStatus(park) === 'Occupied',
+        'orenge-c': parkingLotStatus(park) === 'Reserved'
       }"
     >
-      <div>A001</div>
-      <div>{{ NP1 }}</div>
+      <div>{{ park.lot_id }}</div>
+      <div>{{ parkingLotStatus(park) }}</div>
       <div
         [ngClass]="{
-          'green-c bb bi bi-p-circle-fill': NP1 === 'Available',
-          'red-c bi bi-car-front-fill': NP1 === 'Occupied'
-        }"
-      ></div>
-    </div>
-    <div
-      (click)="updateDisplay('A002')"
-      id="A002"
-      class="col border border-dark border-bottom-0 top"
-      [ngClass]="{
-        'green-c': NP2 === 'Available',
-        'red-c': NP2 === 'Occupied'
-      }"
-    >
-      <div>A002</div>
-      <div>{{ NP2 }}</div>
-      <div
-        [ngClass]="{
-          'green-c bb bi bi-p-circle-fill': NP2 === 'Available',
-          'red-c bi bi-car-front-fill': NP2 === 'Occupied'
-        }"
-      ></div>
-    </div>
-    <div
-      (click)="updateDisplay('A003')"
-      id="A003"
-      class="col border border-dark border-bottom-0 top"
-      [ngClass]="{
-        'green-c': NP3 === 'Available',
-        'red-c': NP3 === 'Occupied'
-      }"
-    >
-      <div>A003</div>
-      <div>{{ NP3 }}</div>
-      <div
-        [ngClass]="{
-          'green-c bb bi bi-p-circle-fill': NP3 === 'Available',
-          'red-c bi bi-car-front-fill': NP3 === 'Occupied'
-        }"
-      ></div>
-    </div>
-    <div
-      (click)="updateDisplay('A004')"
-      id="A004"
-      class="col border border-dark border-bottom-0 top"
-      [ngClass]="{
-        'green-c': NP4 === 'Available',
-        'red-c': NP4 === 'Occupied'
-      }"
-    >
-      <div>A004</div>
-      <div>{{ NP4 }}</div>
-      <div
-        [ngClass]="{
-          'green-c bb bi bi-p-circle-fill': NP4 === 'Available',
-          'red-c bi bi-car-front-fill': NP4 === 'Occupied'
-        }"
-      ></div>
-    </div>
-    <div
-      (click)="updateDisplay('A005')"
-      id="A005"
-      class="col border border-dark border-bottom-0 top"
-      [ngClass]="{
-        'green-c': NP5 === 'Available',
-        'red-c': NP5 === 'Occupied'
-      }"
-    >
-      <div>A005</div>
-      <div>{{ NP5 }}</div>
-      <div
-        [ngClass]="{
-          'green-c bb bi bi-p-circle-fill': NP5 === 'Available',
-          'red-c bi bi-car-front-fill': NP5 === 'Occupied'
+          'green-c bb bi bi-p-circle-fill':
+            parkingLotStatus(park) === 'Available',
+          'red-c  bi bi-car-front-fill xl':
+            parkingLotStatus(park) === 'Occupied',
+          'orenge-c bi bi-flag-fill': parkingLotStatus(park) === 'Reserved'
         }"
       ></div>
     </div>
   </div>
+
+  <!-- Middle row -->
   <div class="row middle">
     <i class="bi bi-arrow-left-square-fill"></i>
   </div>
 
+  <!-- ROW 3 -->
   <div class="row">
     <div
-      (click)="updateDisplay('A006')"
-      id="A006"
-      class="col border border-dark border-top-0 bottom"
+      *ngFor="let park of parks | slice: 5:10; let i = index"
+      (click)="updateDisplay(park.id)"
+      [id]="park.id"
+      class="col border border-dark border-top-0 top"
       [ngClass]="{
-        'green-c': NP6 === 'Available',
-        'red-c': NP6 === 'Occupied'
+        'green-c': parkingLotStatus(park) === 'Available',
+        'red-c': parkingLotStatus(park) === 'Occupied',
+        'orenge-c': parkingLotStatus(park) === 'Reserved'
       }"
     >
-      <div>A006</div>
-      <div>{{ NP6 }}</div>
+      <div>{{ park.lot_id }}</div>
+      <div>{{ parkingLotStatus(park) }}</div>
       <div
         [ngClass]="{
-          'green-c bb bi bi-p-circle-fill': NP6 === 'Available',
-          'red-c bi bi-car-front-fill': NP6 === 'Occupied'
-        }"
-      ></div>
-    </div>
-    <div
-      (click)="updateDisplay('A007')"
-      id="A007"
-      class="col border border-dark border-top-0 bottom"
-      [ngClass]="{
-        'green-c': NP7 === 'Available',
-        'red-c': NP7 === 'Occupied'
-      }"
-    >
-      <div>A007</div>
-      <div>{{ NP7 }}</div>
-      <div
-        [ngClass]="{
-          'green-c bb bi bi-p-circle-fill': NP7 === 'Available',
-          'red-c bi bi-car-front-fill': NP7 === 'Occupied'
-        }"
-      ></div>
-    </div>
-    <div
-      (click)="updateDisplayReserve('A008')"
-      id="A008"
-      class="col border border-dark border-top-0 bottom"
-      [ngClass]="{
-        'green-c': NP8 === 'Available',
-        'red-c': NP8 === 'Occupied',
-        'orenge-c': NP8 === 'Reserved'
-      }"
-    >
-      <div>A008</div>
-      <div>{{ NP8 }}</div>
-      <div
-        [ngClass]="{
-          'green-c bb bi bi-p-circle-fill': NP8 === 'Available',
-          'red-c bi bi-car-front-fill xl': NP8 === 'Occupied',
-          'orenge-c bi bi-flag-fill': NP8 === 'Reserved'
-        }"
-      ></div>
-    </div>
-    <div
-      (click)="updateDisplayReserve('A009')"
-      id="A009"
-      class="col border border-dark border-top-0 bottom"
-      [ngClass]="{
-        'green-c': NP9 === 'Available',
-        'red-c': NP9 === 'Occupied',
-        'orenge-c': NP9 === 'Reserved'
-      }"
-    >
-      <div>A009</div>
-      <div>{{ NP9 }}</div>
-      <div
-        [ngClass]="{
-          'green-c bb bi bi-p-circle-fill': NP9 === 'Available',
-          'red-c bi bi-car-front-fill xl': NP9 === 'Occupied',
-          'orenge-c bi bi-flag-fill': NP9 === 'Reserved'
-        }"
-      ></div>
-    </div>
-    <div
-      (click)="updateDisplayReserve('A010')"
-      id="A010"
-      class="col border border-dark border-top-0 bottom"
-      [ngClass]="{
-        'green-c': NP10 === 'Available',
-        'red-c': NP10 === 'Occupied',
-        'orenge-c': NP10 === 'Reserved'
-      }"
-    >
-      <div>A010</div>
-      <div>{{ NP10 }}</div>
-      <div
-        [ngClass]="{
-          'green-c bb bi bi-p-circle-fill': NP10 === 'Available',
-          'red-c  bi bi-car-front-fill xl': NP10 === 'Occupied',
-          'orenge-c bi bi-flag-fill': NP10 === 'Reserved'
+          'green-c bb bi bi-p-circle-fill':
+            parkingLotStatus(park) === 'Available',
+          'red-c  bi bi-car-front-fill xl':
+            parkingLotStatus(park) === 'Occupied',
+          'orenge-c bi bi-flag-fill': parkingLotStatus(park) === 'Reserved'
         }"
       ></div>
     </div>
