@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { park as parkMock, reserve } from '../mock';
 import { ParkingService } from '../services/parking.service';
 import { StatusParking } from '../variable';
 
@@ -56,24 +54,6 @@ export class ParkingComponent implements OnInit {
 
       this.parks[index].status = res.status;
     });
-  }
-
-  updateDisplayReserve(value: string) {
-    const index = parkMock.findIndex((item) => item.lot_id === value);
-
-    const index2 = reserve.findIndex((item) => item.lot_id === value);
-    console.log(value);
-    console.log(reserve[index2].status);
-    if (parkMock[index].status == 1) {
-      reserve[index2].status = 1;
-    } else {
-      if (parkMock[index].status == 0) {
-        reserve[index2].status = 0;
-      }
-    }
-    console.log(reserve[index2]);
-
-    this.ngOnInit();
   }
 
   goMobile() {
