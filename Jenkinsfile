@@ -39,7 +39,7 @@ pipeline {
             steps {
                     sshagent(credentials: ['jenkins-production']) {
                     sh 'ssh -o StrictHostKeyChecking=no ubuntu@prod.sandbox-me.com mkdir -p /home/ubuntu/parkingfontend'
-                    sh 'scp -o StrictHostKeyChecking=no dev-docker-compose.yml ubuntu@prod.sandbox-me.com:/home/ubuntu/parkingfontend/dev-docker-compose.yml'
+                    sh 'scp -o StrictHostKeyChecking=no docker-compose.yml ubuntu@prod.sandbox-me.com:/home/ubuntu/parkingfontend/docker-compose.yml'
                     }
                 }
         }
@@ -47,8 +47,8 @@ pipeline {
         stage('Deploy on production') {
             steps {
                     sshagent(credentials: ['jenkins-production']) {
-                    sh 'ssh -o StrictHostKeyChecking=no ubuntu@prod.sandbox-me.com docker-compose -f /home/ubuntu/parkingfontend/dev-docker-compose.yml pull'
-                    sh 'ssh -o StrictHostKeyChecking=no ubuntu@prod.sandbox-me.com docker-compose -f /home/ubuntu/parkingfontend/dev-docker-compose.yml up -d'
+                    sh 'ssh -o StrictHostKeyChecking=no ubuntu@prod.sandbox-me.com docker-compose -f /home/ubuntu/parkingfontend/docker-compose.yml pull'
+                    sh 'ssh -o StrictHostKeyChecking=no ubuntu@prod.sandbox-me.com docker-compose -f /home/ubuntu/parkingfontend/docker-compose.yml up -d'
                     }
             }
         }
