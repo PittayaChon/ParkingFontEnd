@@ -18,11 +18,7 @@ pipeline {
                 sh 'docker image rm parkingfontend -f'
                 sh 'docker image prune -a -f'
                 sh 'docker volume prune -f'
-                sh 'docker build -t parkingfontend .'
-                //   script{
-                // //    app = docker.build('api:latest')
-                //    dockerImage = docker.build registry + ":latest"
-                //   }
+                sh 'docker build -t 0865079783/parkingfontend .'
             }
         }
 
@@ -34,7 +30,8 @@ pipeline {
 
         stage('Push image') {
             steps {
-                  echo '..'
+                  sh 'docker login -u="0865079783" -p="dearx2527"'
+                  sh 'docker push 0865079783/parkingfontend:latest'
             }
         }
 
