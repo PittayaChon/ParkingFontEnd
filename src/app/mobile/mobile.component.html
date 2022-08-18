@@ -7,6 +7,6 @@
 </div>
 <ul class="list-group">
   <li  class="list-group-item"  [ngClass]="{'green-c':item.status === 'Available','red-c': item.status === 'Occupied','orenge-c': item.status === 'Reserled'}" *ngFor="let item of statusfrontend"
-  (click)="Updatetoreserve(item.NO_parking,licen.value,item.status)"> <div class="col" *ngIf="item.licenseplate">เลขทะเบียน {{item.licenseplate}}</div> <div class="col">  </div> {{item.NO_parking}} <div class="col"> {{item.status}} </div><div class="col btn btn-primary">จอง</div></li>
+  (click)="Updatetoreserve(item.lot_id,licen.value,item.status)"> <div class="col" *ngIf="item.licenseplate">เลขทะเบียน {{item.licenseplate}}</div> <div class="col">  </div> {{item.lot_id}} <div class="col"> {{item.status}} </div><div class="col btn btn-primary">จอง</div></li>
 </ul>
 <button (click)="goback()">back</button>

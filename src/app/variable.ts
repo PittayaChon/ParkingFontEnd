@@ -1,7 +1,8 @@
 export interface StatusParking {
-  NO_parking: string,
+  id:number,
+  lot_id: string,
   licenseplate: string,
   status: number,
-  reserve: boolean,
+  reserverble: boolean,
   floor: string
 }

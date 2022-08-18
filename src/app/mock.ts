@@ -1,22 +1,22 @@
 import { StatusParking } from "./variable";
 
 export const park: StatusParking[] = [
-  { NO_parking: "A001", licenseplate: '' ,status:0 , reserve:false , floor:'A' },
-  { NO_parking: "A002", licenseplate: '' ,status:1 , reserve:false , floor:'A' },
-  { NO_parking: "A003", licenseplate: '' ,status:0 , reserve:false , floor:'A' },
-  { NO_parking: "A004", licenseplate: '' ,status:0 , reserve:false , floor:'A' },
-  { NO_parking: "A005", licenseplate: '' ,status:0 , reserve:false , floor:'A' },
-  { NO_parking: "A006", licenseplate: '' ,status:0 , reserve:false , floor:'A' },
-  { NO_parking: "A007", licenseplate: '' ,status:0 , reserve:false , floor:'A' },
-  { NO_parking: "A008", licenseplate: '' ,status:0 , reserve:true , floor:'A' },
-  { NO_parking: "A009", licenseplate: '' ,status:0 , reserve:true , floor:'A' },
-  { NO_parking: "A010", licenseplate: '' ,status:0 , reserve:true , floor:'A' },
+  {id:1, lot_id: "A001", licenseplate: '' ,status:0 , reserverble:false , floor:'A' },
+  {id:2, lot_id: "A002", licenseplate: '' ,status:1 , reserverble:false , floor:'A' },
+  {id:3, lot_id: "A003", licenseplate: '' ,status:0 , reserverble:false , floor:'A' },
+  {id:4, lot_id: "A004", licenseplate: '' ,status:0 , reserverble:false , floor:'A' },
+  {id:5, lot_id: "A005", licenseplate: '' ,status:0 , reserverble:false , floor:'A' },
+  {id:6, lot_id: "A006", licenseplate: '' ,status:0 , reserverble:false , floor:'A' },
+  {id:7, lot_id: "A007", licenseplate: '' ,status:0 , reserverble:false , floor:'A' },
+  {id:8, lot_id: "A008", licenseplate: '' ,status:0 , reserverble:true , floor:'A' },
+  {id:9, lot_id: "A009", licenseplate: '' ,status:0 , reserverble:true , floor:'A' },
+  {id:10, lot_id: "A010", licenseplate: '' ,status:0 , reserverble:true , floor:'A' },
 
 ];
 
 export const reserve: StatusParking[] = [
-  { NO_parking: "A008", licenseplate: '' ,status:0 , reserve:true , floor:'A' },
-  { NO_parking: "A009", licenseplate: '' ,status:0 , reserve:true , floor:'A' },
-  { NO_parking: "A010", licenseplate: '' ,status:0 , reserve:true , floor:'A' },
+  {id:8, lot_id: "A008", licenseplate: '' ,status:0 , reserverble:true , floor:'A' },
+  {id:9, lot_id: "A009", licenseplate: '' ,status:0 , reserverble:true , floor:'A' },
+  {id:10, lot_id: "A010", licenseplate: '' ,status:0 , reserverble:true , floor:'A' },
 
 ];

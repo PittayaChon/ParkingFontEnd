@@ -12,7 +12,7 @@ export class MobileComponent implements OnInit {
 datafordisplayreserve = reserve
 NP1='' ; NP2='' ; NP3='' ;
 formg = new FormGroup ({
-  NO_parking: new FormControl(),
+  lot_id: new FormControl(),
   licenseplate: new FormControl(),
   status: new FormControl(),
 })
@@ -24,14 +24,14 @@ statusfrontend:any = this.datafordisplayreserve
 
 Updatetoreserve(value:string ,licen:string, s:string){
 if (s === 'Available'){this.formg.patchValue ({status:2})
-this.formg.patchValue ({NO_parking:value})
+this.formg.patchValue ({lot_id:value})
 this.formg.patchValue ({licenseplate:licen})
 console.log(s)
 console.log(this.formg.value)
 this.mockapiupdate(value ,2)
 return}
 if (s === 'Reserled'){this.formg.patchValue ({status:0})
-    this.formg.patchValue ({NO_parking:value})
+    this.formg.patchValue ({lot_id:value})
     this.formg.patchValue ({licenseplate:licen})
     console.log(s)
     console.log(this.formg.value)
@@ -42,10 +42,10 @@ if (s === 'Reserled'){this.formg.patchValue ({status:0})
 
   mockapiupdate(value:string ,status:number){
         // apiupdate
-const index = reserve.findIndex(item => item.NO_parking === value)
+const index = reserve.findIndex(item => item.lot_id === value)
 console.log(reserve[index].status)
 reserve[index] =  this.formg.value
-const index2 = park.findIndex(item => item.NO_parking === value)
+const index2 = park.findIndex(item => item.lot_id === value)
 park[index2].status = status
 this.ngOnInit()
 console.log(reserve[index])
@@ -53,7 +53,7 @@ console.log(reserve[index])
   ngOnInit(): void { this.statusfrontend = this.datafordisplayreserve
     for (let i = 8; i <= 10; i++) {
       if (i < 10 ){var value = "A00" + String(i)} else {var value = "A010"}
-      const index = this.datafordisplayreserve.findIndex(item => item.NO_parking === value)
+      const index = this.datafordisplayreserve.findIndex(item => item.lot_id === value)
       if (this.datafordisplayreserve[index].status === 0){this.statusfrontend[i-8].status = 'Available'}
       if (this.datafordisplayreserve[index].status === 1){this.statusfrontend[i-8].status = 'Occupied'}
       if (this.datafordisplayreserve[index].status === 2){this.statusfrontend[i-8].status = 'Reserled'}

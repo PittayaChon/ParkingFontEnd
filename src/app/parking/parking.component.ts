@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import {  park, reserve } from '../mock';
+import { ParkingService } from '../services/parking.service';
 import { StatusParking } from '../variable';
 
 @Component({
@@ -28,7 +29,7 @@ statusfrontend:any = [
 
  updateDisplay(value:string){
 
-  const index = park.findIndex(item => item.NO_parking === value)
+  const index = park.findIndex(item => item.lot_id === value)
   console.log(value)
   console.log(park[index].status)
   if (park[index].status == 0) {park[index].status = 1}else{park[index].status = 0}
@@ -37,14 +38,14 @@ statusfrontend:any = [
  }
 
  updateDisplayReserve(value:string){
-  const index = park.findIndex(item => item.NO_parking === value)
+  const index = park.findIndex(item => item.lot_id === value)
   console.log(value)
   console.log(park[index].status)
   if (park[index].status == 2) {park[index].status = 1}else{
     if(park[index].status == 1) {park[index].status = 0}}
   console.log(park[index].status)
 
-  const index2 = reserve.findIndex(item => item.NO_parking === value)
+  const index2 = reserve.findIndex(item => item.lot_id === value)
   console.log(value)
   console.log(reserve[index2].status)
   if (park[index].status == 1) {reserve[index2].status = 1}else{
@@ -57,13 +58,18 @@ statusfrontend:any = [
  goMobile(){
   this.route.navigate(['Mobile']);
  }
-  constructor(private route:Router) {}
+ testapi(){
+   this.s.getHeroes().subscribe(value => this.data = value)
+ }
+
+
+  constructor(private route:Router ,private s:ParkingService) {}
 
   ngOnInit(): void {
 
     for (let i = 1; i <= 10; i++) {
       if (i < 10 ){var value = "A00" + String(i)} else {var value = "A010"}
-      const index = this.data.findIndex(item => item.NO_parking === value)
+      const index = this.data.findIndex(item => item.lot_id === value)
       if (this.data[index].status === 0){this.statusfrontend[i-1] = 'Available'}
       if (this.data[index].status === 1){this.statusfrontend[i-1] = 'Occupied'}
       if (this.data[index].status === 2){this.statusfrontend[i-1] = 'Reserled'}
