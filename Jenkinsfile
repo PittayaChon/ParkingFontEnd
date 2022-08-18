@@ -44,6 +44,7 @@ pipeline {
                     ssh ubuntu@prod.sandbox-me.com ...
                     scp -i  docker-compose.yml ubuntu@prod.sandbox-me.com:/parkingfontend
                     '''
+                }
             }
         }
 
