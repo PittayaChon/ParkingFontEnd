@@ -42,8 +42,8 @@ pipeline {
                     sh 'scp -o StrictHostKeyChecking=no docker-compose.yml ubuntu@prod.sandbox-me.com:/home/ubuntu/parkingfontend/docker-compose.yml'
                     }
                 }
-            }
         }
+        
 
         stage('Deploy on production') {
             steps {
@@ -51,6 +51,7 @@ pipeline {
                     sh 'ssh -o StrictHostKeyChecking=no ubuntu@prod.sandbox-me.com docker-compose -f /home/ubuntu/parkingfontend/docker-compose.yml pull'
                     sh 'ssh -o StrictHostKeyChecking=no ubuntu@prod.sandbox-me.com docker-compose -f /home/ubuntu/parkingfontend/docker-compose.yml up -d'
                     }
-              }
+            }
         }
+    }
 }
