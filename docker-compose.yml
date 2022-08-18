@@ -2,6 +2,8 @@ version: "3.9"
 services:
   frontend:
     image: 0865079783/parkingfontend:latest
+    ports:
+      - 80:80
     environment:
       - WDS_SOCKET_PORT=0
     volumes:
