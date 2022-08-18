@@ -20,42 +20,11 @@ export class MobileComponent implements OnInit {
     status: new FormControl(),
   });
   statusfrontend: any = this.datafordisplayreserve;
+
   constructor(private location: Location) {}
-  goback() {
-    this.location.back();
-  }
 
-  Updatetoreserve(value: string, licen: string, s: string) {
-    if (s === 'Available') {
-      this.formg.patchValue({ status: 2 });
-      this.formg.patchValue({ lot_id: value });
-      this.formg.patchValue({ licenseplate: licen });
-      console.log(s);
-      console.log(this.formg.value);
-      this.mockapiupdate(value, 2);
-      return;
-    }
-    if (s === 'Reserved') {
-      this.formg.patchValue({ status: 0 });
-      this.formg.patchValue({ lot_id: value });
-      this.formg.patchValue({ licenseplate: licen });
-      console.log(s);
-      console.log(this.formg.value);
-      this.mockapiupdate(value, 0);
-    }
-  }
-
-  mockapiupdate(value: string, status: number) {
-    // apiupdate
-    const index = reserve.findIndex((item) => item.lot_id === value);
-    console.log(reserve[index].status);
-    reserve[index] = this.formg.value;
-    const index2 = park.findIndex((item) => item.lot_id === value);
-    park[index2].status = status;
-    this.ngOnInit();
-    console.log(reserve[index]);
-  }
   ngOnInit(): void {
+    this.message = ''
     this.statusfrontend = this.datafordisplayreserve;
     for (let i = 8; i <= 10; i++) {
       if (i < 10) {
@@ -79,5 +48,46 @@ export class MobileComponent implements OnInit {
     this.NP1 = this.statusfrontend[0];
     this.NP2 = this.statusfrontend[1];
     this.NP3 = this.statusfrontend[2];
+  }
+  deletemsg(){
+    this.message = ''
+  }
+  goback() {
+    this.location.back();
+  }
+
+  Updatetoreserve(value: string, licen: string, s: string) {
+
+    if (s === 'Available') {
+      this.formg.patchValue({ status: 2 });
+      this.formg.patchValue({ lot_id: value });
+      this.formg.patchValue({ licenseplate: licen });
+      console.log(s);
+      console.log(this.formg.value);
+      this.mockapiupdate(value, 2);
+      this.message = "ทะเบียน " + licen + " จองที่จอดหมายเลข " + value  + " สำเร็จ"
+
+      return;
+    }
+    if (s === 'Reserved') {
+      this.formg.patchValue({ status: 0 });
+      this.formg.patchValue({ lot_id: value });
+      this.formg.patchValue({ licenseplate: licen });
+      console.log(s);
+      console.log(this.formg.value);
+      this.mockapiupdate(value, 0);
+      this.message = "ทะเบียน " + licen + " ยกเลิกการจองที่จอดหมายเลข " + value  + " สำเร็จ"
+    }
+  }
+
+  mockapiupdate(value: string, status: number) {
+    // apiupdate
+    const index = reserve.findIndex((item) => item.lot_id === value);
+    console.log(reserve[index].status);
+    reserve[index] = this.formg.value;
+    const index2 = park.findIndex((item) => item.lot_id === value);
+    park[index2].status = status;
+    this.ngOnInit();
+    console.log(reserve[index]);
   }
 }
