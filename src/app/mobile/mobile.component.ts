@@ -2,7 +2,6 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { park, reserve } from '../mock';
 import { ParkingService } from '../services/parking.service';
 import { StatusParking } from '../variable';
 enum ParkingLotStatus {
@@ -16,8 +15,7 @@ enum ParkingLotStatus {
   styleUrls: ['./mobile.component.scss'],
 })
 export class MobileComponent implements OnInit {
-
-  message = ''
+  message = '';
 
   formg = new FormGroup({
     id: new FormControl(),
@@ -29,28 +27,29 @@ export class MobileComponent implements OnInit {
   });
   parks: StatusParking[] = [];
 
-
-
-  constructor(private route: Router, private parkingService: ParkingService ,private location:Location ) {}
+  constructor(
+    private route: Router,
+    private parkingService: ParkingService,
+    private location: Location
+  ) {}
 
   ngOnInit(): void {
-    this.message = ''
+    this.message = '';
 
     this.parkingService.getParks().subscribe((parks) => {
       this.parks = parks;
     });
-
   }
 
-  deletemsg(){
-    this.message = ''
+  deletemsg() {
+    this.message = '';
   }
   goback() {
     this.location.back();
   }
 
   Updatetoreserve(id: number, licens: string, lot: string) {
-    this.ngOnInit()
+
     if (licens.length === 0){
       this.message = "ไม่มีเลขทะเบียน"
       return }
@@ -65,6 +64,7 @@ export class MobileComponent implements OnInit {
 
     const updatedPark = {
       ...park,
+
       status: park?.status === ParkingLotStatus.Available ? ParkingLotStatus.Reserved : ParkingLotStatus.Available,
       licenseplate: licens
 
@@ -75,10 +75,22 @@ this.parkingService.updatePark(updatedPark).subscribe((res) => {
   const index = this.parks.findIndex((park) => park.id === res.id);
 
   this.parks[index].status = res.status;
+  this.parks[index].licenseplate = res.licenseplate;
 });
 
-  }
 
+    updatedPark.status === ParkingLotStatus.Reserved
+      ? (this.message =
+          'ทะเบียน ' + licens + ' ยกเลิกการจองที่จอดหมายเลข ' + lot + ' สำเร็จ')
+      : (this.message =
+          'ทะเบียน ' + licens + ' จองที่จอดหมายเลข ' + lot + ' สำเร็จ');
+    this.parkingService.updatePark(updatedPark).subscribe((res) => {
+      const index = this.parks.findIndex((park) => park.id === res.id);
+
+
+      this.parks[index].status = res.status;
+    });
+  }
 
   parkingLotStatus(park: StatusParking) {
     if (park.reservable && park.status === ParkingLotStatus.Available) {
