@@ -14,21 +14,21 @@
   <li
     class="list-group-item"
     [ngClass]="{
-      'green-c': item.status === 'Available',
-      'red-c': item.status === 'Occupied',
-      'orenge-c': item.status === 'Reserved'
+      'green-c': parkingLotStatus(park) === 'Available',
+      'red-c': parkingLotStatus(park) === 'Occupied',
+      'orenge-c': parkingLotStatus(park) === 'Reserved'
     }"
-    *ngFor="let item of statusfrontend"
-    (click)="Updatetoreserve(item.lot_id, licen.value, item.status)
+    *ngFor="let park of parks | slice: 7:10; let i = index"
+    (click)="Updatetoreserve(park.id, licen.value, park.lot_id)
     "
   >
-    <div class="col" *ngIf="item.status === 'Reserved'">
-      เลขทะเบียน {{ item.licenseplate }}
+    <div class="col" *ngIf="parkingLotStatus(park) === 'Reserved'">
+      เลขทะเบียน {{ park.licenseplate }}
     </div>
     <div class="col"></div>
-    {{ item.lot_id }}
-    <div class="col">{{ item.status }}</div>
-    <div class="col btn btn-primary" data-toggle='modal' data-target='#exampleModal'> <div *ngIf="item.status === 'Available'">จอง</div><div *ngIf="item.status === 'Reserved'">ยกเลิกการจอง</div></div>
+    {{ park.lot_id }}
+    <div class="col">{{ parkingLotStatus(park) }}</div>
+    <div class="col btn btn-primary" data-toggle='modal' data-target='#exampleModal'> <div *ngIf="parkingLotStatus(park) === 'Available'">จอง</div><div *ngIf="parkingLotStatus(park) === 'Reserved'">ยกเลิกการจอง</div></div>
   </li>
 </ul>
 <button (click)="goback()">back</button>

@@ -1,54 +1,47 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { park, reserve } from '../mock';
-
+import { ParkingService } from '../services/parking.service';
+import { StatusParking } from '../variable';
+enum ParkingLotStatus {
+  Available = 1,
+  Occupied = 2,
+  Reserved = 3,
+}
 @Component({
   selector: 'app-mobile',
   templateUrl: './mobile.component.html',
   styleUrls: ['./mobile.component.scss'],
 })
 export class MobileComponent implements OnInit {
-  datafordisplayreserve = reserve;
+
   message = ''
-  NP1 = '';
-  NP2 = '';
-  NP3 = '';
+
   formg = new FormGroup({
+    id: new FormControl(),
     lot_id: new FormControl(),
     licenseplate: new FormControl(),
     status: new FormControl(),
+    reservable: new FormControl(),
+    floor: new FormControl(),
   });
-  statusfrontend: any = this.datafordisplayreserve;
+  parks: StatusParking[] = [];
 
-  constructor(private location: Location) {}
+
+
+  constructor(private route: Router, private parkingService: ParkingService ,private location:Location ) {}
 
   ngOnInit(): void {
     this.message = ''
-    this.statusfrontend = this.datafordisplayreserve;
-    for (let i = 8; i <= 10; i++) {
-      if (i < 10) {
-        var value = 'A00' + String(i);
-      } else {
-        var value = 'A010';
-      }
-      const index = this.datafordisplayreserve.findIndex(
-        (item) => item.lot_id === value
-      );
-      if (this.datafordisplayreserve[index].status === 0) {
-        this.statusfrontend[i - 8].status = 'Available';
-      }
-      if (this.datafordisplayreserve[index].status === 1) {
-        this.statusfrontend[i - 8].status = 'Occupied';
-      }
-      if (this.datafordisplayreserve[index].status === 2) {
-        this.statusfrontend[i - 8].status = 'Reserved';
-      }
-    }
-    this.NP1 = this.statusfrontend[0];
-    this.NP2 = this.statusfrontend[1];
-    this.NP3 = this.statusfrontend[2];
+
+    this.parkingService.getParks().subscribe((parks) => {
+      this.parks = parks;
+    });
+
   }
+
   deletemsg(){
     this.message = ''
   }
@@ -56,38 +49,35 @@ export class MobileComponent implements OnInit {
     this.location.back();
   }
 
-  Updatetoreserve(value: string, licen: string, s: string) {
+  Updatetoreserve(id: number, licen: string, lot: string) {
+    const park = this.parks.find((park) => park.id === id);
 
-    if (s === 'Available') {
-      this.formg.patchValue({ status: 2 });
-      this.formg.patchValue({ lot_id: value });
-      this.formg.patchValue({ licenseplate: licen });
-      console.log(s);
-      console.log(this.formg.value);
-      this.mockapiupdate(value, 2);
-      this.message = "ทะเบียน " + licen + " จองที่จอดหมายเลข " + value  + " สำเร็จ"
+    const updatedPark = {
+      ...park,
+      status: park?.status === ParkingLotStatus.Available ? ParkingLotStatus.Reserved : ParkingLotStatus.Available,
+      licenseplate: licen
 
-      return;
-    }
-    if (s === 'Reserved') {
-      this.formg.patchValue({ status: 0 });
-      this.formg.patchValue({ lot_id: value });
-      this.formg.patchValue({ licenseplate: licen });
-      console.log(s);
-      console.log(this.formg.value);
-      this.mockapiupdate(value, 0);
-      this.message = "ทะเบียน " + licen + " ยกเลิกการจองที่จอดหมายเลข " + value  + " สำเร็จ"
-    }
+    };
+
+updatedPark.status === ParkingLotStatus.Available ? this.message = "ทะเบียน " + licen + " ยกเลิกการจองที่จอดหมายเลข " + lot  + " สำเร็จ" : this.message = "ทะเบียน " + licen + " จองที่จอดหมายเลข " + lot  + " สำเร็จ"
+this.parkingService.updatePark(updatedPark).subscribe((res) => {
+  const index = this.parks.findIndex((park) => park.id === res.id);
+
+  this.parks[index].status = res.status;
+});
+
   }
 
-  mockapiupdate(value: string, status: number) {
-    // apiupdate
-    const index = reserve.findIndex((item) => item.lot_id === value);
-    console.log(reserve[index].status);
-    reserve[index] = this.formg.value;
-    const index2 = park.findIndex((item) => item.lot_id === value);
-    park[index2].status = status;
-    this.ngOnInit();
-    console.log(reserve[index]);
+
+  parkingLotStatus(park: StatusParking) {
+    if (park.reservable && park.status === ParkingLotStatus.Available) {
+      return 'Reserved';
+    }
+
+    if (park.status === ParkingLotStatus.Occupied) {
+      return 'Occupied';
+    }
+
+    return 'Available';
   }
 }
