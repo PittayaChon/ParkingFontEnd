@@ -16,7 +16,7 @@ pipeline {
         stage('Build image') {
             steps {
                 sh 'docker image rm parkingfontend -f'
-                // sh 'docker rmi -f <0865079783/parkingfontend'
+                sh 'docker rmi -f 0865079783/parkingfontend'
                 sh 'docker ps -q -f status=exited | xargs --no-run-if-empty docker rm'
                 sh 'docker image prune -a -f'
                 sh 'docker volume prune -f'
