@@ -28,4 +28,3 @@
 - pip3 install robotframework-seleniumlibrary
 - pip3 install webdrivermanager
 - webdrivermanager chrome --linkpath /usr/local/bin
-- chromedriver
