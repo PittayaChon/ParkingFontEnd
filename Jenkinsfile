@@ -21,7 +21,7 @@ pipeline {
                 sh 'docker image prune -a -f'
                 sh 'docker volume prune -f'
                 sh 'docker build -t 0865079783/parkingfontend .'
-                sh 'docker run -d --name 0865079783/parkingfontend'
+                sh 'docker run --name 0865079783/parkingfontend'
                 // sh 'mkdir -p /home/ubuntu/parkingfontendTest'
                 // sh 'cp -f dev-docker-compose.yml /home/ubuntu/parkingfontendTest'
                 // sh 'docker-compose -f /home/ubuntu/parkingfontendTest/dev-docker-compose.yml up pull'
