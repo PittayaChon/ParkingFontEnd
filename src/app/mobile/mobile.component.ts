@@ -48,25 +48,45 @@ export class MobileComponent implements OnInit {
     this.location.back();
   }
 
-  Updatetoreserve(id: number, licen: string, lot: string) {
+  Updatetoreserve(id: number, licens: string, lot: string) {
+
+    if (licens.length === 0){
+      this.message = "ไม่มีเลขทะเบียน"
+      return }
+
+
     const park = this.parks.find((park) => park.id === id);
+    if (park?.status === ParkingLotStatus.Reserved) {
+
+    } else{  if (licens !== park?.licenseplate){
+      this.message = "ไม่สามารถยกเลิกการจองได้ เพราะไม่ใช่เลขทะเบียนของท่าน"
+      return }}
 
     const updatedPark = {
       ...park,
-      status:
-        park?.status === ParkingLotStatus.Available
-          ? ParkingLotStatus.Reserved
-          : ParkingLotStatus.Available,
-      licenseplate: licen,
+
+      status: park?.status === ParkingLotStatus.Available ? ParkingLotStatus.Reserved : ParkingLotStatus.Available,
+      licenseplate: licens
+
     };
 
-    updatedPark.status === ParkingLotStatus.Available
+updatedPark.status === ParkingLotStatus.Reserved ? this.message = "ทะเบียน " + licens + " ยกเลิกการจองที่จอดหมายเลข " + lot  + " สำเร็จ" : this.message = "ทะเบียน " + licens + " จองที่จอดหมายเลข " + lot  + " สำเร็จ"
+this.parkingService.updatePark(updatedPark).subscribe((res) => {
+  const index = this.parks.findIndex((park) => park.id === res.id);
+
+  this.parks[index].status = res.status;
+  this.parks[index].licenseplate = res.licenseplate;
+});
+
+
+    updatedPark.status === ParkingLotStatus.Reserved
       ? (this.message =
-          'ทะเบียน ' + licen + ' ยกเลิกการจองที่จอดหมายเลข ' + lot + ' สำเร็จ')
+          'ทะเบียน ' + licens + ' ยกเลิกการจองที่จอดหมายเลข ' + lot + ' สำเร็จ')
       : (this.message =
-          'ทะเบียน ' + licen + ' จองที่จอดหมายเลข ' + lot + ' สำเร็จ');
+          'ทะเบียน ' + licens + ' จองที่จอดหมายเลข ' + lot + ' สำเร็จ');
     this.parkingService.updatePark(updatedPark).subscribe((res) => {
       const index = this.parks.findIndex((park) => park.id === res.id);
+
 
       this.parks[index].status = res.status;
     });
